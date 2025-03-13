@@ -1,7 +1,7 @@
-﻿# Arm DDT Debugger at TACC
+﻿# Linaro DDT Debugger at TACC
 *Last update: May 18, 2020*
 
-[Arm DDT](https://www.arm.com/products/development-tools/server-and-hpc/forge/ddt) is a symbolic, parallel debugger providing graphical debugging of C, C++ and Fortran threaded and parallel codes (MPI, OpenMP, and Pthreads applications). DDT is available on all TACC compute resources. Use the DDT Debugger with the [MAP Profiler](../../tutorials/map) to develop and analyze your HPC applications.
+[Linaro DDT](https://linaroforge.com/linaro-ddt/) is a symbolic, parallel debugger providing graphical debugging of C, C++ and Fortran threaded and parallel codes (MPI, OpenMP, and Pthreads applications). DDT is available on all TACC compute resources. Use the DDT Debugger with the [MAP Profiler](../../tutorials/map) to develop and analyze your HPC applications.
 
 ## Set up Debugging Environment { #env }
 
@@ -17,12 +17,12 @@ or
 login1$ mpiCC -g -O0 mycode.c
 ```
 
-Follow these steps to set up your debugging environment on Frontera, Stampede3, Lonestar6 and other TACC compute resources.
+Follow these steps to set up your debugging environment on Frontera, Stampede3, Vista, Lonestar6 and other TACC compute resources.
 
 1. **Enable X11 forwarding**. To use the DDT GUI, ensure that X11 forwarding is enabled when you `ssh` to the TACC system. Use the `-X` option on the `ssh` command line if X11 forwarding is not enabled in your SSH client by default.
 
 	```cmd-line
-	localhost$ ssh -X username@stampede2.tacc.utexas.edu
+	localhost$ ssh -X username@vista.tacc.utexas.edu
 	```
 
 1. **Load the DDT module on the remote system along with any other modules needed to run the application**:
@@ -31,19 +31,6 @@ Follow these steps to set up your debugging environment on Frontera, Stampede3, 
 	$ module load ddt mymodule1 mymodule2
 	```
 
-<!--
-	!!! note
-		On Stampede2, there are 2 DDT modules, `ddt_skx` and `ddt_knl`, because the KNL's require a different license.
-
-	```cmd-line
-	$ module load ddt_knl mymodule1 mymodule2 # for KNL nodes
-	```
-
-	or
-	```cmd-line
-	$ module load ddt_skx mymodule1 mymodule2 # for SKX nodes
-	```
--->
 
 1. **Start the debugger**:
 
@@ -59,19 +46,19 @@ Follow these steps to set up your debugging environment on Frontera, Stampede3, 
 
 	...then X11 forwarding was not enabled (Step 1.) or the system may not have local X11 support. If logging in with the `-X` flag doesn't fix the problem, please [create a help ticket][HELPDESK] for assistance.
 
-1. **Click the "Run and Debug a Program" button in the "DDT - Welcome" window**:
+1. Two windows will open.  The main window with the high-level Forge tools.
 
 	<figure id="figure1"><img src="../imgs/DDT-1.png">
 	<figcaption></figcaption></figure>
 
-1. This displays the "Run" window, where you **specify the executable path, command-line arguments, and processor count**. Once set, these values remain from one session to the next.
+1. And the "Run" window, where you **specify the executable path, command-line arguments, and processor count**. Once set, these values remain from one session to the next.
 
 	<figure id="figure2"><img src="../imgs/DDT-2.png">
 	<figcaption></figcaption></figure>
 
 1. **Select each of the "Change" buttons in this window, and adjust the job parameters**.
 
-	* With the "Options" change button, set the MPI Implementation to either "Intel MPI" or "MVAPICH 2i", depending on which MPI software stack you used to compile your program. Click OK.
+	* With the "Options" change button, set the MPI Implementation to either "Intel MPI", "MVAPICH", or "OpenMPI (Compatibility)" depending on which MPI software stack you used to compile your program. Click OK.
 
 		<figure id="figure3"><img src="../imgs/DDT-3.png">
 	<figcaption></figcaption></figure>
@@ -79,7 +66,7 @@ Follow these steps to set up your debugging environment on Frontera, Stampede3, 
 	* In the "Queue Submission Parameters" window, fill in the following fields:
 
 		<table border="1" cellpadding="3">
-		<tr><th>Queue</th><td>default queue is <code>skx</code> for Stampede3, and <code>development</code> for other systems</td></tr>
+		<tr><th>Queue</th><td>default queue is <code>gh-dev</code> for Vista, <code>skx-dev</code> for Stampede3, and <code>development</code> for other systems</td></tr>
 		<tr><th>Time</th><td>(hh:mm:ss)</td></tr>
 		<tr><th>Project</th><td>Allocation/Project to charge the batch job to</td></tr></table>
 
